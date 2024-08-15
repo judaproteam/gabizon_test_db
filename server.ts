@@ -1,6 +1,11 @@
-import { setUser } from './db/user/set'
+import { createDummyData } from "./db/insertDummy"
 
 async function run() {
-  await setUser({ firstName: 'jhon', lastName: 'smith' })
+  try {
+    await createDummyData();
+    console.log('Dummy data created successfully');
+  } catch (e) {
+    console.error('Error creating dummy data:', e);
+  }
 }
 run()

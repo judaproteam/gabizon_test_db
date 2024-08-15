@@ -9,16 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const insertDummy_1 = require("./db/insertDummy");
-function run() {
+exports.setPost = setPost;
+function setPost(post) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield (0, insertDummy_1.createDummyData)();
-            console.log('Dummy data created successfully');
-        }
-        catch (e) {
-            console.error('Error creating dummy data:', e);
-        }
     });
 }
-run();

@@ -1,4 +1,5 @@
 "use strict";
+'use server';
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -9,16 +10,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const insertDummy_1 = require("./db/insertDummy");
-function run() {
+exports.insertPost = insertPost;
+const db_1 = require("../db");
+function insertPost(formData) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield (0, insertDummy_1.createDummyData)();
-            console.log('Dummy data created successfully');
-        }
-        catch (e) {
-            console.error('Error creating dummy data:', e);
-        }
+        const time = Number(formData.get("time"));
+        const date = formData.get("date");
+        const title = formData.get("title");
+        return yield db_1.db.post.create({
+            data: {
+                title,
+                date: new Date(date),
+                time,
+                creator: {
+                    create: {
+                        name: "Default Creator",
+                    },
+                },
+            },
+        });
     });
 }
-run();

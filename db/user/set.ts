@@ -21,28 +21,4 @@ export async function setUser(user: User) {
     },
   })
 
-  console.log('res', res)
-}
-
-export async function setUserNpost(user: User, post: Post) {
-  const res = await db.user.create({
-    data: {
-      firstName: user.firstName,
-      lastName: user.lastName,
-      favoritPosts: {
-        create: {
-          title: post.title,
-          creator: {
-            connect: {
-              id: user.id,
-            },
-          },
-          date: post.date,
-          time: post.time,
-        },
-      },
-    },
-  })
-
-  console.log('res', res)
 }

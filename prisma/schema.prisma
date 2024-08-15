@@ -8,9 +8,9 @@ datasource db {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  firstName    String
-  lastName     String
+  id        Int    @id @default(autoincrement())
+  firstName String
+  lastName  String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -21,9 +21,9 @@ model User {
 }
 
 model Saved {
-  id        Int      @id @default(autoincrement())
-  user     User     @relation(fields: [userId], references: [id])
-  post     Post     @relation(fields: [postId], references: [id])
+  id   Int  @id @default(autoincrement())
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
 
   createdAt DateTime @default(now())
 
@@ -31,13 +31,13 @@ model Saved {
   postId Int
 
   @@unique([userId, postId])
-
 }
 
 model Watched {
-  id        Int      @id @default(autoincrement())
-  user     User     @relation(fields: [userId], references: [id])
-  post     Post     @relation(fields: [postId], references: [id])
+  id    Int  @id @default(autoincrement())
+  user  User @relation(fields: [userId], references: [id])
+  post  Post @relation(fields: [postId], references: [id])
+  count Int  @default(0)
 
   createdAt DateTime @default(now())
 
@@ -45,16 +45,15 @@ model Watched {
   postId Int
 
   @@unique([userId, postId])
-
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  creator   Creator  @relation(fields: [creatorId], references: [id])
-  date      DateTime @default(now())
-  time      Int
-  type      String
+  id      Int      @id @default(autoincrement())
+  title   String
+  creator Creator  @relation(fields: [creatorId], references: [id])
+  date    DateTime @default(now())
+  time    Int
+  type    String   @default("שיעור")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -66,8 +65,9 @@ model Post {
 }
 
 model Creator {
-  id   Int    @id @default(autoincrement())
-  name String
+  id        Int    @id @default(autoincrement())
+  firstName String @default("")
+  lastName  String @default("")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt

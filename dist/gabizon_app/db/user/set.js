@@ -9,16 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const insertDummy_1 = require("./db/insertDummy");
-function run() {
+exports.setUser = setUser;
+const db_1 = require("../db");
+function setUser(user) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield (0, insertDummy_1.createDummyData)();
-            console.log('Dummy data created successfully');
-        }
-        catch (e) {
-            console.error('Error creating dummy data:', e);
-        }
+        const record = yield db_1.db.user.create({
+            data: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+            },
+        });
+        //TODO: validate user record
     });
 }
-run();

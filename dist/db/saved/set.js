@@ -9,16 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const insertDummy_1 = require("./db/insertDummy");
-function run() {
+exports.setSaved = setSaved;
+const db_1 = require("../db");
+function setSaved(user, post) {
     return __awaiter(this, void 0, void 0, function* () {
-        try {
-            yield (0, insertDummy_1.createDummyData)();
-            console.log('Dummy data created successfully');
+        const record = yield db_1.db.saved.findUnique({
+            where: {
+                userId_postId: {
+                    userId: user.id,
+                    postId: post.id
+                }
+            }
+        });
+        if (!record) {
+            yield db_1.db.saved.create({
+                data: {
+                    user: { connect: { id: user.id } },
+                    post: { connect: { id: post.id } }
+                }
+            });
+            return true;
         }
-        catch (e) {
-            console.error('Error creating dummy data:', e);
-        }
+        return false;
     });
 }
-run();
