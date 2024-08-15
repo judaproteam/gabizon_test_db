@@ -11,10 +11,41 @@ model User {
   id           Int    @id @default(autoincrement())
   firstName    String
   lastName     String
-  favoritPosts Post[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+
+  Saved Saved[]
+
+  Watched Watched[]
+}
+
+model Saved {
+  id        Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  userId Int
+  postId Int
+
+  @@unique([userId, postId])
+
+}
+
+model Watched {
+  id        Int      @id @default(autoincrement())
+  user     User     @relation(fields: [userId], references: [id])
+  post     Post     @relation(fields: [postId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  userId Int
+  postId Int
+
+  @@unique([userId, postId])
+
 }
 
 model Post {
@@ -23,11 +54,15 @@ model Post {
   creator   Creator  @relation(fields: [creatorId], references: [id])
   date      DateTime @default(now())
   time      Int
-  userSaved User[]
+  type      String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
   creatorId Int
+
+  Saved Saved[]
+
+  Watched Watched[]
 }
 
 model Creator {

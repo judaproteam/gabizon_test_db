@@ -9,16 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const db_1 = require("./db/db");
+const set_1 = require("./db/user/set");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
-        const res = yield db_1.db.user.create({
-            data: {
-                firstName: 'jude',
-                lastName: 'zvi',
-            },
-        });
-        console.log('res', res);
+        yield (0, set_1.setUser)({ firstName: 'jhon', lastName: 'smith' });
     });
 }
 run();
